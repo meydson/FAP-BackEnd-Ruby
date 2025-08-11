@@ -5,7 +5,7 @@ produto_barato = 0
 
 until valor.last == 0 do
   puts "Informe o valor do produto ou digite 0 para finalizar:"
-  valor.push(gets.chomp.to_f.round(2))
+  valor << gets.chomp.to_f.round(2)
 end
 
 valor.pop
@@ -15,7 +15,6 @@ produto_barato = valor[0]
 
 for i in 0...valor.size do
   total += valor[i]
-  puts = "Valor total #{total}"
   if produto_caro < valor[i]
     produto_caro = valor[i]
   end
