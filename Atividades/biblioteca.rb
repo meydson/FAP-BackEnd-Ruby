@@ -73,7 +73,7 @@ def emprestar_livro(livros)
     pause
   else
     puts "Livro não encontrado ou já está emprestado."
-    puts "_________________________"
+    puts "__________________________________________"
     pause
   end
 end
