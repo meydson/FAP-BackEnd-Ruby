@@ -12,7 +12,8 @@ def menu
   puts "3. Buscar livro por título ou autor"
   puts "4. Emprestar livro"
   puts "5. Devolver livro"
-  puts "6. Sair"
+  puts "6. Remover livro"
+  puts "7. Sair"
   print "Escolha uma opção: "
   gets.chomp.to_i
 end
@@ -95,6 +96,23 @@ def devolver_livro(livros)
   end
 end
 
+def remover_livro(livros)
+  print "Digite o título do livro que deseja remover: "
+  titulo = gets.chomp.downcase
+  livro = livros.find { |l| l[:titulo].downcase == titulo }
+  
+  if livro
+    livros.delete(livro)
+    puts "Livro '#{livro[:titulo]}' removido com sucesso!"
+    puts "__________________________________________"
+    pause
+  else
+    puts "Livro não encontrado."
+    puts "_________________________"
+    pause
+  end
+end
+
 def main
     loop do
         case menu
@@ -109,10 +127,16 @@ def main
         when 5
         devolver_livro(@livros)
         when 6
+        remover_livro(@livros)
+        when 7
         puts "Saindo da Biblioteca Ruby. Até logo!"
+        puts "____________________________________"
+        pause
         break
         else
         puts "Opção inválida. Tente novamente."
+        puts "_________________________________"
+        pause
         end
     end
 end
