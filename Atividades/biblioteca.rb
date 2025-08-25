@@ -55,10 +55,11 @@ end
 def buscar_livro(livros)
   print "Digite o título do livro ou autor que deseja buscar: "
   inp_user = gets.chomp.downcase
+  #filtrar livros por status
   resultado = livros.select { |livro| livro[:titulo].downcase.include?(inp_user) }
   resultado += livros.select { |livro| livro[:autor].downcase.include?(inp_user) }
   resultado.uniq! { |livro| livro[:titulo].downcase }
-  if resultado.empty? || resultado.all? { |livro| livro[:status] != 'disponível' }
+  if resultado.empty?
     puts "Nenhum livro encontrado com o título ou autor: '#{inp_user}'."
   else
     puts "Livros encontrados:"
