@@ -1,4 +1,10 @@
-@livros = []
+@livros = [
+  { titulo: 'O Senhor dos Anéis', autor: 'J.R.R. Tolkien', ano: 1954, status: 'disponível' },
+  { titulo: '1984', autor: 'George Orwell', ano: 1949, status: 'disponível' },
+  { titulo: 'Dom Casmurro', autor: 'Machado de Assis', ano: 1899, status: 'disponível' },
+  { titulo: 'A Revolução dos Bichos', autor: 'George Orwell', ano: 1945, status: 'disponível' },
+  { titulo: 'Eu, Robô', autor: 'Isaac Asimov', ano: 1950, status: 'disponível' },
+]
 
 def pause
   puts "Pressione Enter para continuar..."
@@ -18,7 +24,7 @@ def menu
   gets.chomp.to_i
 end
 
-def cadastrar_livro(livros)
+def cadastrar_livro
   print "Digite o título do livro: "
   titulo = gets.chomp
   print "Digite o autor do livro: "
@@ -30,13 +36,15 @@ def cadastrar_livro(livros)
 end
 
 def listar_livros(livros)
+  contador = 1
   if livros.empty?
     puts "Nenhum livro cadastrado."
   else
     puts "Livros disponíveis:"
-    @livros.each_with_index do |livro, index|
+    livros.each_with_index do |livro|
         if livro[:status] == 'disponível'
-            puts "#{index + 1}. Título: #{livro[:titulo]} | Autor: #{livro[:autor]} | Ano: (#{livro[:ano]})"
+          puts "#{contador}. Título: #{livro[:titulo]} | Autor: #{livro[:autor]} | Ano: (#{livro[:ano]})"
+          contador += 1
         end
     end
    end
@@ -46,19 +54,16 @@ end
 
 def buscar_livro(livros)
   print "Digite o título do livro ou autor que deseja buscar: "
-  titulo = gets.chomp.downcase
-  resultado = livros.select { |livro| livro[:titulo].downcase.include?(titulo) }
-  resultado += livros.select { |livro| livro[:autor].downcase.include?(titulo) }
+  inp_user = gets.chomp.downcase
+  resultado = livros.select { |livro| livro[:titulo].downcase.include?(inp_user) }
+  resultado += livros.select { |livro| livro[:autor].downcase.include?(inp_user) }
   resultado.uniq! { |livro| livro[:titulo].downcase }
-  if resultado.empty?
-    puts "Nenhum livro encontrado com o título '#{titulo}'."
+  if resultado.empty? || resultado.all? { |livro| livro[:status] != 'disponível' }
+    puts "Nenhum livro encontrado com o título ou autor: '#{inp_user}'."
   else
     puts "Livros encontrados:"
-    resultado.each do |livro|
-      puts "Título: #{livro[:titulo]} | Autor: #{livro[:autor]} | Ano: (#{livro[:ano]}) | Status: #{livro[:status]}"
-    end
+    listar_livros(resultado)
     puts "__________________________________________________________"
-    pause
   end
 end
 
@@ -117,7 +122,7 @@ def main
     loop do
         case menu
         when 1
-        cadastrar_livro(@livros)
+        cadastrar_livro
         when 2
         listar_livros(@livros)
         when 3
