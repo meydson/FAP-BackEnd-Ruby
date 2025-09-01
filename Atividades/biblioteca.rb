@@ -1,4 +1,4 @@
-@livros = [
+=begin @livros = [
   { titulo: 'O Senhor dos Anéis', autor: 'J.R.R. Tolkien', ano: 1954, status: 'disponível' },
   { titulo: '1984', autor: 'George Orwell', ano: 1949, status: 'disponível' },
   { titulo: 'Dom Casmurro', autor: 'Machado de Assis', ano: 1899, status: 'disponível' },
@@ -147,4 +147,6 @@ def main
     end
 end
 
-main
+main =end
+
+biblioteca = "Atividades::Biblioteca.new"
