@@ -32,6 +32,17 @@ class ContaBancaria
   def exibir_saldo
     puts "Saldo atual: R$#{'%.2f' % @saldo}"
   end
+
+  def transferir(valor, conta_destino)
+    validacao = validar_saldo(valor, @saldo)
+    if validacao
+      @saldo -= valor
+      conta_destino.saldo += valor
+      puts "Transferência de R$#{'%.2f' % valor} para a conta #{conta_destino.conta} realizada com sucesso."
+    else
+      puts "Saldo insuficiente ou valor inválido para transferência."
+    end
+  end
   
   private
   def validar_saldo(valor, saldo_atual)
@@ -43,13 +54,17 @@ class ContaBancaria
   end
 end
 
-conta = ContaBancaria.new("12345-6", "João Silva", 1000.0)
-puts conta.conta
-puts conta.titular
-puts conta.exibir_saldo
-conta.depositar(500.0)
-conta.sacar(200.0)
-conta.exibir_saldo
-conta.sacar(2000.0)
-conta.depositar(-100.0)
-conta.exibir_saldo
+conta1 = ContaBancaria.new(1, "João Silva", 1000.0)
+conta2 = ContaBancaria.new(2, "Renato Machado", 1000.0)
+puts conta1.conta
+puts conta1.titular
+puts conta1.exibir_saldo
+conta1.depositar(500.0)
+conta1.sacar(200.0)
+conta1.exibir_saldo
+conta1.sacar(2000.0)
+conta1.depositar(-100.0)
+conta1.exibir_saldo
+conta1.transferir(300.0, conta2)
+conta1.exibir_saldo
+conta2.exibir_saldo
